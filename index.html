@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU AI Act Compliance Quick Check — Classify Your AI Systems Before August 2026</title>
+    <meta name="description" content="EU AI Act compliance workflow for AI founders and teams. Classify risk tiers, map obligations, generate checklists. $9.99.">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #e94560;
+            --accent-hover: #c73550;
+            --bg: #fafafa;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #555;
+            --border: #e0e0e0;
+            --green: #2d6a4f;
+            --yellow: #e9c46a;
+            --orange: #f4a261;
+            --red: #e76f51;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: var(--primary);
+            color: white;
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            max-width: 800px;
+            margin: 0 auto 16px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .deadline-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .hero .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        .hero .price-note {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+            margin-top: 16px;
+        }
+
+        .cta-btn:hover { background: var(--accent-hover); }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .timeline {
+            margin-top: 32px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .dot-past { background: var(--green); }
+        .dot-active { background: var(--accent); animation: pulse 2s infinite; }
+        .dot-future { background: var(--border); }
+
+        .timeline-content strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .timeline-content span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .risk-table th, .risk-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .risk-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .risk-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tag-prohibited { background: #fde8e8; color: #c0392b; }
+        .tag-high { background: #fff3e0; color: #e65100; }
+        .tag-limited { background: #fff9c4; color: #f57f17; }
+        .tag-minimal { background: #e8f5e9; color: #2e7d32; }
+
+        .fine-box {
+            background: #fff3e0;
+            border-left: 4px solid var(--orange);
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+
+        .fine-box strong { color: var(--red); }
+
+        .testimonials {
+            background: var(--primary);
+            color: white;
+            padding: 60px 24px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 32px auto 0;
+        }
+
+        .testimonial {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .testimonial p {
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .testimonial strong {
+            color: white;
+        }
+
+        .footer-cta {
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--bg);
+        }
+
+        .footer-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .footer-cta p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .faq {
+            border-top: 1px solid var(--border);
+            padding: 24px 0;
+        }
+
+        .faq summary {
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .faq p {
+            padding: 8px 0 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 16px 40px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="deadline-badge">⏰ Deadline: August 2, 2026</div>
+    <h1>EU AI Act Compliance<br>Quick Check Skill</h1>
+    <p class="subtitle">Classify your AI systems, map obligations, and generate compliance checklists before the deadline.</p>
+    <div class="price">$9.99</div>
+    <div class="price-note">One-time purchase. Instant download. No subscription.</div>
+    <a href="#buy" class="cta-btn">Get the Skill →</a>
+</section>
+
+<div class="container">
+
+    <section class="section">
+        <h2>What You Get</h2>
+        <p>Everything you need to start your EU AI Act compliance journey — in one ZIP file.</p>
+        <div class="grid">
+            <div class="card">
+                <h3>📋 Risk Classifier</h3>
+                <p>Step-by-step template to classify any AI system by risk tier: prohibited, high-risk, limited, or minimal.</p>
+            </div>
+            <div class="card">
+                <h3>✅ Article 50 Checklist</h3>
+                <p>Complete transparency obligation checklist for the August 2026 deadline. Chatbots, content generation, deepfakes.</p>
+            </div>
+            <div class="card">
+                <h3>👥 Deployer Obligations</h3>
+                <p>Article 26 compliance template with 11 deployer obligations, gap analysis, and role mapping.</p>
+            </div>
+            <div class="card">
+                <h3>💰 Fine Calculator</h3>
+                <p>Penalty estimation by revenue tier. €35M or 7% of turnover — know your exposure.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Why This Matters Now</h2>
+        <p>The EU AI Act is the world's first comprehensive AI law. It applies to any company whose AI systems affect EU residents — regardless of where you're based.</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot dot-past"></div>
+                <div class="timeline-content">
+                    <strong>February 2025 — Prohibited practices banned</strong>
+                    <span>Social scoring, manipulative AI, and untargeted facial recognition are now illegal.</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot dot-past"></div>
+                <div class="timeline-content">
+                    <strong>August 2025 — GPAI obligations apply</strong>
+                    <span>Foundation model providers must provide technical documentation and training data summaries.</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot dot-active"></div>
+                <div class="timeline-content">
+                    <strong>August 2, 2026 — YOUR DEADLINE</strong>
+                    <span>Article 50 transparency obligations take effect. High-risk system obligations for Annex III systems.</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot dot-future"></div>
+                <div class="timeline-content">
+                    <strong>December 2027 — Full enforcement</strong>
+                    <span>All high-risk obligations enforceable. National authorities can inspect and fine.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Risk Classification at a Glance</h2>
+        <p>The EU AI Act uses a tiered risk system. The higher the risk, the stricter the obligations.</p>
+
+        <table class="risk-table">
+            <thead>
+                <tr>
+                    <th>Risk Tier</th>
+                    <th>Examples</th>
+                    <th>What's Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="risk-tag tag-prohibited">Prohibited</span></td>
+                    <td>Government social scoring, manipulative AI</td>
+                    <td>Stop immediately</td>
+                </tr>
+                <tr>
+                    <td><span class="risk-tag tag-high">High-Risk</span></td>
+                    <td>Hiring AI, credit scoring, medical AI</td>
+                    <td>Full compliance: risk management, documentation, conformity assessment</td>
+                </tr>
+                <tr>
+                    <td><span class="risk-tag tag-limited">Limited Risk</span></td>
+                    <td>Chatbots, AI-generated content, deepfakes</td>
+                    <td>Transparency: disclose AI use, label content</td>
+                </tr>
+                <tr>
+                    <td><span class="risk-tag tag-minimal">Minimal Risk</span></td>
+                    <td>Spam filters, AI games, inventory tools</td>
+                    <td>AI literacy only</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="fine-box">
+            <strong>⚠️ Penalties are real:</strong> Up to €35,000,000 or 7% of global annual turnover for prohibited AI. But the bigger risk is losing enterprise customers who require compliance documentation before signing.
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>What's Inside the Skill</h2>
+        <ul class="checklist">
+            <li>Complete SKILL.md with classification workflow and obligation mapping</li>
+            <li>Risk Classifier template — step-by-step system assessment</li>
+            <li>Article 50 Transparency Checklist — for August 2026 deadline</li>
+            <li>Deployer Obligations template — Article 26 compliance</li>
+            <li>Fine Calculator — penalty estimation by revenue tier</li>
+            <li>Marketplace listing copy — ready for PromptBase, Gumroad, or your site</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>Who This Is For</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>AI Founders</h3>
+                <p>You ship AI features. Your enterprise buyer just asked for "your AI Act documentation." This skill gives you a head start.</p>
+            </div>
+            <div class="card">
+                <h3>Product Managers</h3>
+                <p>You need to classify every AI feature in your product. This skill gives you a repeatable framework.</p>
+            </div>
+            <div class="card">
+                <h3>Compliance Officers</h3>
+                <p>You're building AI governance from scratch. This skill provides templates and checklists you can customize.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="buy">
+        <h2>Get the Skill — $9.99</h2>
+        <p>One-time purchase. Instant download. No subscription. No upsells.</p>
+        <div class="fine-box" style="margin-bottom: 24px;">
+            <strong>What this skill does NOT do:</strong> It does not provide legal advice, guarantee compliance, or replace professional legal counsel. The EU AI Act requires ongoing processes, not a one-time checklist. Use this as your starting point, not your finish line.
+        </div>
+        <!-- Creem payment link — replace with your actual Creem link -->
+        <a href="https://creem.io/checkout/YOUR_PRODUCT_ID" class="cta-btn" style="font-size: 1.2rem; padding: 18px 48px;">
+            Buy Now — $9.99 →
+        </a>
+        <p style="margin-top: 12px; color: #888; font-size: 0.85rem;">Secure payment via Creem. Instant delivery of ZIP file.</p>
+    </section>
+
+</div>
+
+<footer>
+    <p>EU AI Act Compliance Quick Check Skill — Built for AI teams preparing for the 2026 deadline.</p>
+    <p style="margin-top: 8px;">Not legal advice. Consult qualified legal counsel for compliance decisions.</p>
+</footer>
+
+</body>
+</html>
